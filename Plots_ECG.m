@@ -119,8 +119,3 @@ plot(f, newPower);
 axis([0, 50, 0, 1]);
 title("Trimmed filtered");
 
-
-% x = ifourier(f, y);
-% k = ([0, 500]);
-% plot(k, x);
-
