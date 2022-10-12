@@ -1,6 +1,7 @@
 %% plot ECG
 clc, clear
 
+rawDataE = readtable('C:\Users\ellio\Desktop\Data EKG Labb\Elliot EKG.xlsx');
 rawDataS = readtable('C:\Users\ellio\Desktop\Data EKG Labb\Stine EKG.xlsx');
 
 dataArray = table2array(rawDataS); % converts the table to 2d array
@@ -27,6 +28,26 @@ rawData = readtable("C:\Users\ellio\Desktop\Data EKG Labb\Gain.xlsx", "VariableN
 
 plot(rawData, "Frequency [Hz]", "Gain", "Marker","o"); % plots data
 legend("Gain") % adds legend
+%% test fourier/filtering (extra)
+clc, clear
+
+
+Ts = 1/50; % timesignature (sampling frekvens)
+t = 0:Ts:10-Ts; % ööver hur lång tid som vi mätte indelad i segment baserade på Ts
+x = sin(2*pi*15*t) + sin(2*pi*20*t); % funktion som vi kollar på
+
+y = fft(x); % fast fourier transform
+fs = 1/Ts; % inverterade tidssignaturen
+f = (0:length(y)-1)*fs/length(y); % längden på frekvenssprektumet
+
+hold on
+subplot(2, 1, 1);
+plot(t, x);
+
+subplot(2, 1, 2);
+plot(f, abs(y)) % plot över frekvensspektrument
+
+hold off
 
 %% fourier
 clc, clear
@@ -54,15 +75,15 @@ f = (0:length(y)-1)*fs/length(y); % längden på frekvenssprektumet
 n = length(x); % längden av x
 power = abs(y).^2/n; % filterar ut brus
 
-subplot(2, 2, 1);% subplots
+subplot(2, 3, 1);% subplots
 plot(f, abs(y));% plot of frequency spectrum 
 axis([0, 50, 0, 50]);% adjusts the axis length
-title("fourier");% title
+title("Fourier");% title
 
-subplot(2, 2, 2);
+subplot(2, 3, 2);
 plot(f, power); % plot of frequency spectrum ^2
 axis([0, 50, 0, 5]); % adjusts the axis length
-title("filtered fourier");% title
+title("filtered");% title
 
 % removing the extremes of the transforms
 
@@ -82,14 +103,23 @@ for i=1: 500
 end
 
 %plotting the trimmed transforms
-subplot(2, 2, 3);
+subplot(2, 3, 3);
 plot(f, abs(newY));% plot of frequency spectrum with extremes removed 
-xlim([0, 50]);% adjusts the axis length
-title("trimmed fourier");% title
+axis([0, 50, 0, 50]);% adjusts the axis length
+title("Trimmed fourier");% title
 
 
-subplot(2, 2, 4);
+subplot(2, 3, 4);
 plot(f, newPower);% plot of frequency spectrum ^2 with extremes removed
-xlim([0, 50]);% adjusts the axis length
-title("Trimmed & filtered Fourier"); % title
+axis([0, 50, 0, 1]);% adjusts the axis length
+title("Trimmed filtered"); % title
 
+
+k = ifft(abs(newY), [], 1, "nonsymmetric");
+
+subplot(2, 3, 5);
+plot(t, k);
+
+
+subplot(2, 3, 6);
+plot(t, x);
