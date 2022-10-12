@@ -56,20 +56,23 @@ power = abs(y).^2/n; % filterar ut brus
 
 subplot(2, 2, 1);% subplots
 plot(f, abs(y));% plot of frequency spectrum 
-axis([0, 50, 0, 50]);% adjusts the axis length
+xlim([-0.5, 50.5]);% adjusts the axis length
 title("fourier");% title
+xlabel("Frequency (Hz)");
+ylabel("Magnitude");
 
 subplot(2, 2, 2);
 plot(f, power); % plot of frequency spectrum ^2
-axis([0, 50, 0, 5]); % adjusts the axis length
+xlim([-0.5, 50.5]); % adjusts the axis length
 title("filtered fourier");% title
-
+xlabel("Frequency (Hz)");
+ylabel("Magnitude");
 % removing the extremes of the transforms
 
 newY = []*500;
 newPower = []*500;
 
-margin = 2;
+margin = 2; % what frequencies to remove
 
 for i=1: 500
     if i > 1+margin && i < 500-margin % the values to keep
@@ -86,10 +89,12 @@ subplot(2, 2, 3);
 plot(f, abs(newY));% plot of frequency spectrum with extremes removed 
 xlim([0, 50]);% adjusts the axis length
 title("trimmed fourier");% title
-
+xlabel("Frequency (Hz)");
+ylabel("Magnitude");
 
 subplot(2, 2, 4);
 plot(f, newPower);% plot of frequency spectrum ^2 with extremes removed
 xlim([0, 50]);% adjusts the axis length
 title("Trimmed & filtered Fourier"); % title
-
+xlabel("Frequency (Hz)");
+ylabel("Magnitude");
