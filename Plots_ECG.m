@@ -1,7 +1,7 @@
 %% plot ECG
 clc, clear
 
-rawDataS = readtable('C:\Users\ellio\Desktop\Data EKG Labb\Stine EKG.xlsx');
+rawDataS = readtable('C:\Users\...\ECG.xlsx');% sub your path
 
 dataArray = table2array(rawDataS); % converts the table to 2d array
 Ts = 1/50; % time signature (sampling frequency)
@@ -23,7 +23,7 @@ ylabel("Amplitude (mv)")% labels the y-axis
 %% trend Gain
 clc, clear
 
-rawData = readtable("C:\Users\ellio\Desktop\Data EKG Labb\Gain.xlsx", "VariableNamingRule","preserve"); %fetches the data
+rawData = readtable("C:\Users\...\Gain.xlsx", "VariableNamingRule","preserve"); %fetches the data, sub path
 
 plot(rawData, "Frequency [Hz]", "Gain", "Marker","o"); % plots data
 legend("Gain") % adds legend
@@ -31,7 +31,7 @@ legend("Gain") % adds legend
 %% fourier
 clc, clear
 
-rawData = readtable('C:\Users\ellio\Desktop\Data EKG Labb\Stine EKG.xlsx');
+rawData = readtable('C:\Users\...\ECG.xlsx'); % sub your path
 
 
 
